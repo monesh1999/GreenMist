@@ -17,6 +17,7 @@ import in.umbrellaR1.GreenMist.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
+@CrossOrigin("*")
 public class ProductController {
     
     @Autowired
