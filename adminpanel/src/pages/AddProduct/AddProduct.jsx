@@ -10,7 +10,7 @@ const AddProduct = () => {
     name: '',
     description: '',
     price: '',
-    category: ''
+    category: 'cream'
   });
 
   const onChangeHandler = (event) => {
@@ -28,7 +28,7 @@ const AddProduct = () => {
     try {
         await addProduct(data,image);
         toast.success('product added successfully!')
-        setData({ name: '', description: '', price: '', category: '' });
+        setData({ name: '', description: '', price: '', category: 'cream' });
         setImage(null);
     } catch (error) {
         toast.error("error adding product")

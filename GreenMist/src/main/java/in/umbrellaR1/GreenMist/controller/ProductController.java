@@ -25,7 +25,7 @@ public class ProductController {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<ProductResponse> addProduct(
             @RequestPart("product") String productString,
             @RequestPart("file") MultipartFile file) {
