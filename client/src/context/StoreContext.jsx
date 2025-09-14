@@ -1,4 +1,6 @@
-import { createContext, useState } from "react";
+import axios from "axios";
+import { createContext, useEffect, useState } from "react";
+import { fetchProductList } from "../service/productService";
 
 export const  StoreContext =createContext(null);
 
@@ -6,9 +8,20 @@ export const StoreContextProvider =(props) =>{
 
     const [productList,setProductList] = useState([]);
 
+    
+
     const contextValue ={
+        productList
         
     };
+    useEffect(()=>{
+        async function loadData() {
+            
+            const data = await fetchProductList();
+            setProductList(data);
+        }
+        loadData();
+    },[]);
 
 
     return(
