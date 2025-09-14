@@ -19,7 +19,7 @@ export const assets = {
 
 export const categories = [
     {
-        category: 'Carrot',
+        category: 'Vegetable',
         icon: carrot
     },
     {
@@ -27,7 +27,7 @@ export const categories = [
         icon: banana
     },
     {
-        category: 'Apple',
+        category: 'Fruite',
         icon: apple
     },
     {
@@ -35,7 +35,7 @@ export const categories = [
         icon: grapes
     },
     {
-        category: 'Onion',
+        category: 'cream',
         icon: onion
     },
     {

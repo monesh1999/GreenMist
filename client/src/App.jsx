@@ -4,6 +4,7 @@ import { Route,Routes } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import ExploreProduct from './pages/ExploreProduct/ExploreProduct'
 import Contact from './pages/Contact Us/Contact'
+import ProductDetails from './pages/ProductDetails/ProductDetails'
  
 
 
@@ -17,6 +18,7 @@ const App = () => {
         <Route path='/' element={<Home />}/>
         <Route path='/contact' element={<Contact />}/>
         <Route path='/explore' element={<ExploreProduct />}/>
+        <Route path='/product/:id' element={<ProductDetails/>}/>
       </Routes>
     </div>
   )

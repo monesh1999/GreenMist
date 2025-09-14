@@ -28,7 +28,7 @@ const AddProduct = () => {
     try {
         await addProduct(data,image);
         toast.success('product added successfully!')
-        setData({ name: '', description: '', price: '', category: 'cream' });
+        setData({ name: '', description: '', price: '', category: 'Ice-cream' });
         setImage(null);
     } catch (error) {
         toast.error("error adding product")
@@ -60,10 +60,10 @@ const AddProduct = () => {
               <div className="mb-3">
                 <label htmlFor="category" className="form-label">Category</label>
                 <select name="category" id="category" className='form-control'  onChange={onChangeHandler} value={data.category}>
-                    <option value="cream">cream</option>
+                    <option value="Ice-cream">Ice-cream</option>
                     <option value="oil">Oil</option>
-                    <option value="seram">seram</option>
-                    <option value="powder">powder</option>
+                    <option value="Vegetable">Vegetable</option>
+                    <option value="Fruite">Fruite</option>
                 </select>
               </div>
                <div className="mb-3">
