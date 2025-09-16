@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { StoreContext } from '../../context/StoreContext';
 
 const ProductItem = ({name,description,id,imageUrl,price}) => {
+  const {increaseQty,decreaseQty,quantities}=useContext(StoreContext);
   return (
     <div  className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex justify-content-center">
             <div  className="card" style={{"maxWidth": "320px"}}>
@@ -24,8 +26,20 @@ const ProductItem = ({name,description,id,imageUrl,price}) => {
           </div>
          <div className="card-footer d-flex justify-content-between bg-light">
             <Link className="btn btn-primary btn-sm" to={`/product/${id}`}>View Food</Link>
-            <button className="btn btn-primary btn-sm">
-              <i className="bi bi-plus-circle"></i></button>
+            {quantities[id] > 0 ?(
+              <div className="d-flex align-items-center gap-2">
+                <button className="btn btn-danger btn-sm" onClick={() => decreaseQty(id)}>
+                  <i className="bi bi-dash-circle"></i></button>
+                  <span className="fw-bold">{quantities[id]}</span>
+                  <button className="btn btn-success btn-sm" onClick={() => increaseQty(id)}>
+                  <i className="bi bi-plus-circle"></i></button>
+              </div>
+            ):(
+              <button className="btn btn-primary btn-sm" onClick={() => increaseQty(id)}>
+                  <i className="bi bi-plus-circle"></i></button>
+            )
+            }
+            
          </div>
      </div>
    </div>
