@@ -6,8 +6,9 @@ import ExploreProduct from './pages/ExploreProduct/ExploreProduct'
 import Contact from './pages/Contact Us/Contact'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
 import Cart from './pages/Cart/Cart'
- import PlaceOrder from './components/PlaceOrder/PlaceOrder'
-
+import PlaceOrder from './components/PlaceOrder/PlaceOrder'
+import Login from './components/Login/Login'
+import Register from './components/Register/Register'
 
 
 const App = () => {
@@ -22,6 +23,8 @@ const App = () => {
         <Route path='/product/:id' element={<ProductDetails/>}/>
         <Route path='/cart' element={<Cart />}/>
         <Route path='/order' element={<PlaceOrder/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
       </Routes>
     </div>
   )
