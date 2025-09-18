@@ -43,4 +43,10 @@ public class UserService implements UserServiceImpl {
 		return response;
 	}
 
+	@Override
+	public String findByUserIdByEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

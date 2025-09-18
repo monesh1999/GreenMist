@@ -3,6 +3,14 @@ package in.umbrellaR1.GreenMist.dto;
 public class AuthenticationResponse {
 	
 	private String email;
+	/**
+	 * @param email
+	 * @param token
+	 */
+	public AuthenticationResponse(String email, String token) {
+		this.email = email;
+		this.token = token;
+	}
 	private String token;
 	
 	public String getEmail() {

@@ -6,5 +6,7 @@ import in.umbrellaR1.GreenMist.dto.UserResponse;
 public interface UserServiceImpl {
 	
 	UserResponse registerUser(UserRequest request);
+	
+	String findByUserIdByEmail(String email);
 
 }

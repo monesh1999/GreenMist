@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,6 +21,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import in.umbrellaR1.GreenMist.filter.JwtRequestFilter;
 import in.umbrellaR1.GreenMist.service.AppUserDetailsService;
 
 
@@ -34,18 +33,21 @@ public class SecurityConfig {
 	@Autowired
 	private AppUserDetailsService appUserDetailsService;
 	
+	@Autowired
+	private JwtRequestFilter jwtRequestFilter;
+	
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	    http.cors(Customizer.withDefaults())
 	        .csrf(AbstractHttpConfigurer::disable)
 	        .authorizeHttpRequests(auth -> auth
-	            .requestMatchers("/api/login", "/api/register", "/api/products").permitAll()
+	            .requestMatchers("/api/login", "/api/register").permitAll()
 	            .anyRequest().authenticated()  // everything else requires JWT
 	        )
-	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //	        .logout(AbstractHttpConfigurer::disable)
-//	        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 //	        .exceptionHandling(ex -> ex.authenticationEntryPoint(customAuthenticationEntryPoint));
 
 	   
