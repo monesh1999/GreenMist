@@ -1,6 +1,7 @@
 package in.umbrellaR1.GreenMist.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class UserService implements UserServiceImpl {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private AuthenticationFacade authenticationFacade;
 
 	@Override
 	public UserResponse registerUser(UserRequest request) {
@@ -44,9 +48,10 @@ public class UserService implements UserServiceImpl {
 	}
 
 	@Override
-	public String findByUserIdByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+	public Long findByUserId() {
+		String loggedInUserEmail = authenticationFacade.getAuthentication().getName();
+		UserEntity loggedInUser =userRepository.findByEmail(loggedInUserEmail).orElseThrow(()-> new UsernameNotFoundException("User Not Found"));
+		return loggedInUser.getId();
 	}
 
 }

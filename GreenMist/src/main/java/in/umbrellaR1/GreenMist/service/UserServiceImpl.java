@@ -7,6 +7,8 @@ public interface UserServiceImpl {
 	
 	UserResponse registerUser(UserRequest request);
 	
-	String findByUserIdByEmail(String email);
+	Long findByUserId();
+	
+	
 
 }

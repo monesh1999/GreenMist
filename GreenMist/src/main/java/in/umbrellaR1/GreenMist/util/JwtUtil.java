@@ -18,57 +18,79 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-	
-	private final String SECRET = "GreenMist-create-by-monesh-ThisSecretKeyMustBeAtLeast32Bytes"; 
-	private static final long EXPIRATION = 1000 * 60 * 60 * 24; // 24 hours
 
-	 private final SecretKey secretKey = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
-	 
-	
-	
-	public String generateToken(UserDetails userDetails) {
-		 Map<String,Object> cliams = new HashMap<>();
-		 return createToken(cliams,userDetails.getUsername());
-		 
-	 }
+    // Minimum 32 chars (HS256 requirement)
+    private static final String SECRET = "GreenMist-create-by-monesh-ThisSecretKeyMustBeAtLeast32Bytes"; 
+    private static final long EXPIRATION = 1000 * 60 * 60 * 24; // 24 hours
 
+    private final SecretKey secretKey = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
-	private String createToken(Map<String, Object> cliams, String username) {
-		return Jwts.builder()
-         .setClaims(cliams)
-         .setSubject(username)
-         .setIssuedAt(new Date(System.currentTimeMillis()))
-         .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
-         .signWith(secretKey, SignatureAlgorithm.HS256)
-         .compact();
-	 }
-	
-	public String extractUsername(String token) {
-		 return extractClaims(token,Claims::getSubject);
-		 
-	 }
-	public Date extractExpired(String token) {
-		 return extractClaims(token,Claims::getExpiration);
-	 }
-	 public Boolean isTokenExpired(String token) {
-		 return extractExpired(token).before(new Date());
-	 }
-	 public Claims extractAllClaims(String token) {
-	        return Jwts.parserBuilder()
-	                .setSigningKey(secretKey)
-	                .build()
-	                .parseClaimsJws(token)
-	                .getBody();
-	                
-	    }
-	 public <T> T extractClaims(String token, Function<Claims,T> claimsResolver) {
-		 final Claims claims = extractAllClaims(token);
-		 return claimsResolver.apply(claims);
-	 }
-	 
-	 public Boolean validateToken(String token,UserDetails userDetails) {
-		 final String email = extractUsername(token);
-		 return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
-	 }
+    /**
+     * Generate JWT token for a user
+     */
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, userDetails.getUsername());
+    }
 
+    /**
+     * Create token with claims and subject
+     */
+    private String createToken(Map<String, Object> claims, String username) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .signWith(secretKey, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    /**
+     * Extract username (email/username) from JWT
+     */
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    /**
+     * Extract expiration date from JWT
+     */
+    public Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    /**
+     * Check if token is expired
+     */
+    public Boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    /**
+     * Extract all claims
+     */
+    private Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    /**
+     * Extract single claim
+     */
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    /**
+     * Validate JWT token
+     */
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
 }
