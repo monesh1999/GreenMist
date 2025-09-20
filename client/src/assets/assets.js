@@ -2,6 +2,7 @@ import logo from './logo.jpg'
 import parcel from './parcel.jpg'
 import upload from './upload.jpg'
 import cart from './cart.jpg'
+import profile from './profile.jpg'
 
 import carrot from './carrot.jpg'
 import banana from './banana.jpg'
@@ -15,6 +16,7 @@ export const assets = {
     parcel,
     upload,
     cart,
+    profile,
 };
 
 export const categories = [

@@ -2,8 +2,6 @@ package in.umbrellaR1.GreenMist.service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +38,7 @@ public class CartServiceImpl implements CartService {
 
 	    Map<Long, Integer> cartItems = entity.getItems();
 	    cartItems.put(request.getProductId(), cartItems.getOrDefault(request.getProductId(), 0) + 1);
+	    
 	    
 
 	    entity.setItems(cartItems);
